@@ -1,0 +1,83 @@
+Intentions:
+- Learn RAG and embeddings through building
+- Build some kind of second brain system for future personal use
+
+Problem:
+- I have a tendency to journal and forget what I journaled about years later
+- I'd like to keep journaling and have some way to recall memories
+- I'd also like to have a wise, thoughtful thinking partner/therapist to help me process thoughts, emotions, and to help me reframe things, pushback on any faulty thinking, provide blindspots, provide different perspectives, or 
+- I currently do a lot of this "wise thinking" through ChatGPT or Claude but I'd prefer to not share my data to OpenAI and Claude
+- I have a lot of my very personal chat conversations in ChatGPT that I'd like to use as memory for my journal
+
+
+Solution:
+- Python project
+- Create embeddings and a vector database of my ChatGPT history
+- RAG 
+- Use a local LLM and talk to it via a simple chat web UI
+
+User Workflow:
+- Open some web UI
+- Start journaling
+- Hit some button to analyze
+- Get Analysis
+- (bonus) Option to start a deeper conversion based on analysis
+- (bonus) Tag themes
+
+Technical Workflow:
+- Have a ChatGPT conversation history JSON or HTML file
+- Convert JSON or HTML to chunks
+- Create embeddings from chunks
+- Create nodes with metadata from embeddings
+- Index nodes
+- Store in some DB
+- Have UI
+- User enters journal / chat query
+- Take the query and run semantic search against it
+- Return top 10 results in a nice format
+- (nice to have) re-rank results
+- Synthesize results with local LLM and pull in prompt templates
+- Have prompt templates stored in strings
+- Return analysis to user and follow up questions 
+
+Tools
+- Python - scripts and logic
+- Beautifulsoup4 and JSON for handling HTML file and embedded JSON
+- pandas for parsing
+- LlamaIndex - RAG tool
+- Gradio - User interface
+- Ollama - local LLM using Gemma for privacy
+- Vector DB - ChromaDB?
+- Jupyter integration - Notebook for development
+- Embedding model - sentence-transformers
+
+
+Questions
+- What is my chunking strategy?
+    - By conversation
+        - By user individual message / turn
+        - By system individual message / turn
+- What about context window for embeddings?
+    -   Should be okay?
+- How will I parse and tag metadata on date, time, emotional tone, conversation context, etc?
+    - Out of scope, no need to do it, I'm just trying to build a simple RAG system
+- What is the metadata schema by chunk?
+    - chunk_id - To identify and sort chunks
+    - chunk_text - Actual chunk
+    - chunk_type - Type of chunk (user, system, assistant)
+    - creation_date - Date of conversation (ISO string if available) - To track
+    - source_id - To organize sources of chunks (ChatGPT, Claude, Apple Notes)
+    - source_name - Human-readable source name
+    - tags - list of tags for classification of chunks (nice to have)
+    - token_estimate - size context window usage
+    - author - who wrote it (e.g. Michael, ChatGPT, Claude)
+- Chunk metadata schema design decisions
+    - Hash out of scope
+    - Left turn / Q&A pairings out of scope
+- How will we parse the HTML/JSON?
+    - 
+
+Note
+- Make sure to not upload my JSON file until Github via .gitignore :) 
+- Try to manually do this and not rely on Claude Code too much
+- Data encryption is future scope
